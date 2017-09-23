@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Routes, RouterModule, Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, Response, RequestOptions,  } from '@angular/http'
 
 import { SpotifyService } from '../services/spotify.service';
 import { UtilsService } from '../services/utils.service';
@@ -10,10 +13,33 @@ import { UtilsService } from '../services/utils.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private spotify: SpotifyService, private utils: UtilsService) { }
+  private currentURL;
+    private path;
+
+  constructor(private http: HttpClient, private spotify: SpotifyService, private utils: UtilsService, private router: Router) { }
 
   ngOnInit() {
-	this.login();
+	
+  this.currentURL = window.location.href;
+  this.path = window.location.pathname;
+  console.log(this.currentURL);
+  console.log(this.path);
+  if (this.path == "/logout"){
+    this.logout();
+  } else
+  {
+    this.login();  
+     // let headers = new Headers({"Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("access_token")});
+     // let options = new RequestOptions({ headers: headers });
+     const headers = new HttpHeaders()
+            // .set("X-CustomHeader", "custom header value")
+            .set("Content-Type", "application/json")
+            .set("Authorization", "Bearer " + localStorage.getItem("access_token"));
+    // this.login();
+    this.http.get(this.spotify.getUserDataUrl(),{headers}).subscribe(data => {
+      console.log(data);
+    });
+  }
   }
 
 
@@ -24,27 +50,14 @@ private loggedIn(): boolean {
   }
 
   private login(): void {
-    var stateKey = 'spotify_auth_state';
-            var client_id = 'b5c133ff1ffb40649178cae000645081'; // Your client id
-            var redirect_uri = 'http://localhost:4200/callback'; // Your redirect uri
-
-            var state = this.utils.generateRandomString(16);
-
-            localStorage.setItem(stateKey, state);
-            var scope = 'user-read-private user-read-email';
-
-            var url = 'https://accounts.spotify.com/authorize';
-            url += '?response_type=token';
-            url += '&client_id=' + encodeURIComponent(client_id);
-            url += '&scope=' + encodeURIComponent(scope);
-            url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
-            url += '&state=' + encodeURIComponent(state);
-
-            window.location.href=url;
+    window.location.href=this.spotify.getAuthURL();
   }
 
   private logout(): void {
     // this.sessionService.logout();
+    this.utils.clear();
+    this.utils.showLocalStorage();
+    this.router.navigateByUrl('');
   }
 
 }

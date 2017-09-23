@@ -7,6 +7,7 @@ import { CallbackComponent } from '../callback/callback.component';
 
 const routes: Routes = [
     { path: 'login',     component: LoginComponent },
+    { path: 'logout',     component: LoginComponent },
     { path: 'callback',     component: CallbackComponent }
 ];
 
