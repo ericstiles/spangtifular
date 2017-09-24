@@ -1,11 +1,31 @@
-import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/map';
+
+import {Injectable} from '@angular/core';
+import {Http} from '@angular/http';
+import {Observable} from 'rxjs';
+
+import { Headers } from '@angular/http';
 
 import { UtilsService } from './utils.service';
 
+class SearchItem {
+  constructor(public track: string,
+              public artist: string,
+              public link: string,
+              public thumbnail: string,
+              public artistId: string,
+              public artists: string,
+              public items: string) {}
+  }
+
 @Injectable()
 export class SpotifyService {
-
-  constructor(private utils: UtilsService) { }
+  private searchUrl: string;
+  private artistUrl: string;
+  private type: string = 'artist';
+  private albumsUrl: string;
+  private albumUrl: string;
+  constructor(private utils: UtilsService, private http: Http) { }
 
   /**
    * [getAuthURL description]
@@ -34,6 +54,17 @@ export class SpotifyService {
   public getUserDataUrl(): string {
   		var url = 'https://api.spotify.com/v1/me'
   		return url;
+  }
+
+    searchMusic(searchString: string) : Observable<SearchItem>{
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
+
+    this.searchUrl =
+        `https://api.spotify.com/v1/search?query=${searchString}&offset=0&limit=20&type=${this.type}&market=US`;
+    return this.http.get(this.searchUrl, { headers: headers }).map(response => {return response.json()});
   }
 
 }
