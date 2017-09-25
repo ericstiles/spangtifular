@@ -18,3 +18,10 @@ This project is very new and I'm still sorting it out.  I'm learning Angular 4 i
 * Add a simple test case to build out that flow
 * Add better happy path flow.  It the token is expired try to get a new one or ask to log in again.
 * UI updates on search results to have results better organized.
+
+# To Use
+
+* Add client key and callback url to spotify.services.ts
+* npm install
+* ng serve
+* open localhost:4200
