@@ -34,8 +34,8 @@ export class SpotifyService {
   public getAuthURL(): string {
 
     var stateKey = 'spotify_auth_state';
-    var client_id = 'b5c133ff1ffb40649178cae000645081'; // Your client id
-    var redirect_uri = 'http://localhost:4200/callback'; // Your redirect uri
+    var client_id = 'KEY'; // Your client id
+    var redirect_uri = 'CALLBACK'; // Your redirect uri
 
     var state = this.utils.generateRandomString(16);
 
