@@ -6,16 +6,67 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://bootswatch.com/cyborg/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="http://localhost:4200/styles.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+/*@media (min-width: 768px) {
+  .row.equal {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}*/
+
+/* Color columns */
+[class^="col-"] {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #eee;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86,61,124,.2);
+}
+
+/* Make equal height with table styles */
+
+@media (min-width: 768px) {
+  .table-row {
+    display: table;
+    table-layout: fixed;
+  }
+
+  .table-row [class^="col-"] {
+    display: table-cell;
+    float: none;
+  }
+}
+
+.demo{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+    background-color:#efefef;
+}
+
+#equalheight {
+    overflow: hidden; 
+}
+
+.row.equal {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.equal > [class*='col-'] {
+  flex-grow: 1;
+}
+
+</style>
 </head>
 <body>
   <app-root>launch my baby</app-root>
 </body>
-<div class="navbar navbar-default navbar-fixed-bottom">
+<!-- <div class="navbar navbar-default navbar-fixed-bottom">
   <div class="panel-body">
     Powered by <a href="https://cli.angular.io/" target="_blank">Angular CLI <span class="glyphicon glyphicon-globe"></span></a>
   </div>
   <div class="panel-footer">We code with <span class="glyphicon glyphicon-heart redc"></span> just for fun</div>
-</div>
+</div> -->
 </html>

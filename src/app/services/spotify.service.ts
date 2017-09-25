@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs';
 
 import { Headers } from '@angular/http';
@@ -22,7 +22,7 @@ class SearchItem {
 export class SpotifyService {
   private searchUrl: string;
   private artistUrl: string;
-  private type: string = 'artist';
+  // private type: string = 'artist';
   private albumsUrl: string;
   private albumUrl: string;
   constructor(private utils: UtilsService, private http: Http) { }
@@ -56,15 +56,30 @@ export class SpotifyService {
   		return url;
   }
 
-    searchMusic(searchString: string) : Observable<SearchItem>{
+    search(type: string, searchString: string) : Observable<any>{
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
 
     this.searchUrl =
-        `https://api.spotify.com/v1/search?query=${searchString}&offset=0&limit=20&type=${this.type}&market=US`;
-    return this.http.get(this.searchUrl, { headers: headers }).map(response => {return response.json()});
+        'https://api.spotify.com/v1/search?query=' + encodeURIComponent(searchString) + '&offset=0&limit=20&type=' + type + '&market=US';
+    console.log(this.searchUrl);
+    return this.http.get(this.searchUrl, { headers: headers })
+    .map(response => {return response.json()})
+    .catch((error:any) => Observable.throw(error.json().error || 'Server error')); //...errors if any;
+  }
+
+      searchArtist(searchString: string) : Observable<any>{
+
+        return this.search('artist', searchString);
+
+  }
+
+        searchTracks(searchString: string) : Observable<any>{
+
+        return this.search('track', searchString);
+
   }
 
 }
