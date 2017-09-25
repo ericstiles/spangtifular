@@ -1,28 +1,20 @@
-# Ng2SpotifyEts
+An Angular 4 SPA implementation for spotify services.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.0.
+# Why
+The goal of the project was to write services for some missing functionality that I felt spotify needed for managing playlists.
 
-## Development server
+I haven't found new or updated projects that included any login functionality to get the required token necessary to make spotify calls.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Status
 
-## Code scaffolding
+This project is very new and I'm still sorting it out.  I'm learning Angular 4 in the process.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## As of today (9/25/17)
+* The "implicit grant flow" does work for logging in for a very limited happy path solution.  Use the browser dev console.  If a 401 is returned with a token expired message then "logout" and "login again. 
+* The search service does work taking the token and searching on artists and tracks.
+* Not test cases exist.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Next Steps
+* Add a simple test case to build out that flow
+* Add better happy path flow.  It the token is expired try to get a new one or ask to log in again.
+* UI updates on search results to have results better organized.
